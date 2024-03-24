@@ -1,19 +1,23 @@
-pub fn collatz(mut n: u64) -> Option<u64> {
+pub fn collatz(n: u64) -> Option<u64> {
     let mut steps = 0;
 
-    for step in 0.. {
-        if n == 1 {
-            return Some(steps);
-        } else if n % 2 == 0 {
-            n /= 2;
-        } else {
-            n = 3 * n + 1;
-        }
+    if n == 0 {
+        return None;
+    }
+    
+    let mut current = n;
 
-        steps = steps + 1;
+    while current != 1 {
+        if current % 2 == 0 {
+            current /= 2;
+        } else {
+            if current > (std::u64::MAX - 1) / 3 {
+                return None;
+            }
+            current = 3 * current + 1;
+        }
+        steps += 1;
     }
 
     Some(steps)
-
-
 }
